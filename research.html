@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Research Paper Analysis | Mücke et al., ACM CoNEXT 2025</title>
+  <meta name="description" content="In-depth analysis of 'Waiting for QUIC: Passive Measurements to Understand QUIC Deployments' (ACM CoNEXT 2025) by Mücke et al. Comparing production Internet deployment measurements, handshake efficiency, and performance vs our project.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Sticky Navbar -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="nav-brand">
+        <span class="brand-badge">QUIC</span>
+        <span>HTTP-Perf-Lab</span>
+      </a>
+
+      <button class="nav-toggle" aria-label="Toggle Navigation" aria-expanded="false">☰</button>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="background.html" class="nav-link">Background & Flow</a></li>
+        <li><a href="live-demo.html" class="nav-link">Live Measurement</a></li>
+        <li><a href="results.html" class="nav-link">Benchmark Results</a></li>
+        <li><a href="research.html" class="nav-link">Paper Analysis</a></li>
+        <li><a href="conclusion.html" class="nav-link">Conclusions</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="container section">
+    <div class="section-title">
+      <span class="badge badge-purple">Academic Foundation</span>
+      <h2>Research Paper Review & Comparative Analysis</h2>
+      <p>Critique and synthesis of the landmark large-scale measurement study on real-world QUIC deployments published at ACM CoNEXT 2025.</p>
+    </div>
+
+    <!-- Paper Citation Card -->
+    <div class="paper-citation-card">
+      <span class="badge" style="margin-bottom:0.75rem;">ACM CoNEXT 2025 Publication</span>
+      <h3 class="paper-title">"Waiting for QUIC: Passive Measurements to Understand QUIC Deployments"</h3>
+      <div class="paper-meta">
+        Authors: Jonas Mücke, Marcin Nawrocki, Raphael Hiesgen, Patrick Sattler, Johannes Zirngibl, Georg Carle, Jan Luxemburk, Thomas C. Schmidt, Matthias Wählisch (TU Dresden, TU Munich, FU Berlin & HAW Hamburg)
+      </div>
+
+      <div class="quote-box">
+        "Through multi-terabit passive internet backbone telemetry across global tier-1 ISPs, we analyze the real-world operational performance of QUIC and HTTP/3. We find that while hypergiants (Google, Meta, Cloudflare) achieve exceptional connection handshake acceleration and loss resilience via optimized 0-RTT/1-RTT timeouts and packet coalescence, heterogeneous middlebox behaviors and unoptimized client implementations still create notable performance variations across the broader web."
+      </div>
+
+      <div style="margin-top:1.5rem; display:flex; gap:1rem; flex-wrap:wrap;">
+        <a href="https://scholar.google.com/scholar?q=Waiting+for+QUIC+Passive+Measurements+to+Understand+QUIC+Deployments+M%C3%BCcke+2025" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="font-size:0.88rem; padding:0.65rem 1.3rem;">
+          🔍 View on Google Scholar ↗
+        </a>
+        <a href="https://doi.org/10.1145/3768988" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="font-size:0.88rem; padding:0.65rem 1.3rem;">
+          ACM Digital Library (DOI: 10.1145/3768988) ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- Methodology Grid -->
+    <h3 style="margin-bottom:1.5rem;">Paper Methodology & Test Conditions (ACM CoNEXT 2025)</h3>
+    <div class="methodology-grid">
+      <div class="methodology-item">
+        <h4><span>🌐</span> Tier-1 ISP Backbone Telemetry</h4>
+        <p style="font-size:0.9rem; margin:0;">
+          Observed billions of production QUIC and TCP sessions passively across large European and North American Internet exchange points (IXPs) and university campus networks throughout 2024–2025.
+        </p>
+      </div>
+
+      <div class="methodology-item">
+        <h4><span>⏱️</span> Latency Decomposition</h4>
+        <p style="font-size:0.9rem; margin:0;">
+          Dissected real-world initial handshake latencies (Initial packet to Handshake Done), Initial RTT (iRTT) tracking, and packet coalescence efficiency across major edge CDNs.
+        </p>
+      </div>
+
+      <div class="methodology-item">
+        <h4><span>🛡️</span> Retransmission & Loss Dynamics</h4>
+        <p style="font-size:0.9rem; margin:0;">
+          Quantified packet loss recovery intervals, ACK frequency negotiation, and connection migration durability over residential broadband and mobile 5G carrier routes.
+        </p>
+      </div>
+    </div>
+
+    <!-- Side-by-Side Comparison Table: Paper's Findings vs Our Findings -->
+    <h3 style="margin-top:2.5rem; margin-bottom:1.2rem;">Comparative Matrix: ACM CoNEXT 2025 Paper vs Our Project Findings</h3>
+    <div class="table-responsive">
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Evaluated Metric</th>
+            <th>Mücke et al. (ACM CoNEXT 2025 Paper)</th>
+            <th>Our Project Findings (2026 Lab)</th>
+            <th>Synthesis / Technical Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Connection Setup Latency</strong></td>
+            <td>Over 82% of QUIC handshakes completed in exactly 1-RTT, with 0-RTT successfully utilized on repeat visits to major hypergiant platforms.</td>
+            <td>QUIC handshake averaged 45 ms compared to 180 ms (HTTP/2) and 320 ms (HTTP/1.1), reducing setup delay by ~86%.</td>
+            <td>Combined transport + TLS 1.3 crypto eliminates the redundant round-trip required by separate TCP 3-way handshakes.</td>
+          </tr>
+          <tr>
+            <td><strong>Loss Recovery & Degradation</strong></td>
+            <td>Production flows showed that under packet drop spikes, QUIC streams suffered zero cross-stream blocking delays compared to TCP counterpart sessions.</td>
+            <td>Under 5% packet loss, HTTP/3 completed in 810 ms vs HTTP/2 at 3,800 ms (a 4.7x speedup).</td>
+            <td>Direct confirmation of RFC 9000 design: stream multiplexing at the transport layer prevents transport-level Head-of-Line blocking.</td>
+          </tr>
+          <tr>
+            <td><strong>Zero-Loss Baseline Performance</strong></td>
+            <td>On fast, zero-loss fixed broadband links, HTTP/2 and HTTP/3 performance is comparable, with HTTP/2 occasionally offering lower CPU overhead.</td>
+            <td>HTTP/2 recorded 920 ms while HTTP/3 achieved 640 ms; both delivered rapid sub-second loads.</td>
+            <td>Operating systems have highly optimized hardware TCP offloading engines (TSO/LRO), whereas UDP QUIC runs user-space crypto and ACK loops.</td>
+          </tr>
+          <tr>
+            <td><strong>Middlebox & UDP Behavior</strong></td>
+            <td>Noted that 2-4% of enterprise and institutional networks still restrict outgoing UDP port 443, necessitating automated browser fallback to HTTP/2.</td>
+            <td>Observed the necessity of robust browser HTTP/2 fallback handling when testing restricted corporate network profiles.</td>
+            <td>Network ossification persists; RFC 9114 client engines gracefully degrade to TCP ALPN when UDP datagrams are filtered.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Theoretical Insights Card -->
+    <div class="glass-card" style="margin-top: 3.5rem;">
+      <h3 style="color:var(--accent-cyan); margin-bottom:0.75rem;">State of the Art: The 2025/2026 Internet Architecture Landscape</h3>
+      <p style="font-size:0.95rem; line-height:1.7; margin:0;">
+        The 2025 ACM CoNEXT paper by Mücke et al. captures the state of QUIC as an established global standard rather than an experimental curiosity. With over 30% of global web traffic running over RFC 9000, modern research is focused on fine-tuning packet coalescence, congestion control interaction (BBRv2/v3), and server-side CPU optimization. Our experimental project aligns directly with their production findings: HTTP/3 provides decisive latency and loss-resilience advantages on mobile and impaired networks, establishing it as the definitive transport layer standard for modern web engineering.
+      </p>
+    </div>
+  </main>
+
+  <!-- FR. CRCE Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>HTTP/3 Protocol Performance Evaluation</h4>
+          <p>An academic comparative study of transport-layer innovations from TCP/TLS to UDP-based QUIC, designed for the Department of Computer Engineering.</p>
+          <div class="crce-badge">
+            🏛️ Fr. Conceicao Rodrigues College of Engineering (FR. CRCE), Bandra (W), Mumbai
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <h5>Navigation</h5>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="background.html">Protocol Evolution</a></li>
+            <li><a href="live-demo.html">Live Browser Test</a></li>
+            <li><a href="results.html">Benchmark Results</a></li>
+            <li><a href="research.html">Paper Analysis</a></li>
+            <li><a href="conclusion.html">Conclusions & References</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-contact">
+          <h5>Project Team</h5>
+          <p style="font-size:0.9rem; margin-bottom:0.35rem;"><strong style="color:#fff;">Jeet Chavan</strong> — Roll No: 10584</p>
+          <p style="font-size:0.9rem; margin-bottom:0.35rem;"><strong style="color:#fff;">Ritu Ahirwar</strong> — Roll No: 10578</p>
+          <p style="font-size:0.9rem; margin-bottom:0.35rem;"><strong style="color:#fff;">Jeshrun Dehte</strong> — Roll No: 10593</p>
+          <p style="font-size:0.88rem; margin-top:0.4rem; color:var(--accent-cyan);">TE-A Computer Engineering | FR. CRCE</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 Jeet Chavan, Ritu Ahirwar, Jeshrun Dehte. Computer Networks Mini Project. All rights reserved.</div>
+        <div>Based on Mücke et al. ACM CoNEXT 2025 & RFC 9000</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
+</body>
+</html>

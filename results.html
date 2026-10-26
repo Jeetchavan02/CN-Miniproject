@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Benchmark Charts & Results | HTTP/1.1 vs HTTP/2 vs HTTP/3</title>
+  <meta name="description" content="Visual performance benchmarks across load times, packet loss resilience, connection setup, and multi-dimensional radar metrics with Chart.js.">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Sticky Navbar -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="nav-brand">
+        <span class="brand-badge">QUIC</span>
+        <span>HTTP-Perf-Lab</span>
+      </a>
+
+      <button class="nav-toggle" aria-label="Toggle Navigation" aria-expanded="false">☰</button>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="background.html" class="nav-link">Background & Flow</a></li>
+        <li><a href="live-demo.html" class="nav-link">Live Measurement</a></li>
+        <li><a href="results.html" class="nav-link">Benchmark Results</a></li>
+        <li><a href="research.html" class="nav-link">Paper Analysis</a></li>
+        <li><a href="conclusion.html" class="nav-link">Conclusions</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="container section">
+    <div class="section-title">
+      <span class="badge">Empirical Benchmarks</span>
+      <h2>Protocol Performance Evaluation & Charts</h2>
+      <p>Data visualization across page load latencies, synthetic packet drop degradation, and multi-attribute radar scoring.</p>
+    </div>
+
+    <!-- Toggle between Our Results and Paper Results -->
+    <div class="results-header-actions">
+      <div>
+        <p style="margin:0; font-size:0.95rem; color:#cbd5e1;">Toggle dataset between local lab experiments and published 2025 results:</p>
+      </div>
+      <div class="toggle-group">
+        <button class="toggle-btn active" id="toggle-our">Our Lab Results</button>
+        <button class="toggle-btn" id="toggle-paper">Paper Results (Mücke et al., 2025)</button>
+      </div>
+    </div>
+
+    <!-- 4 Charts Grid -->
+    <div class="charts-grid">
+      <!-- Chart 1: Average Page Load Time (Bar) -->
+      <div class="chart-card">
+        <h3>Average Page Load Time (0% Packet Loss)</h3>
+        <p class="chart-desc">Baseline latency comparison loading a standardized composite webpage (ms).</p>
+        <div class="chart-wrapper">
+          <canvas id="chart-avg-load"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 2: Load Time vs Packet Loss (Line) -->
+      <div class="chart-card">
+        <h3>Degradation Under Packet Loss (0% to 5%)</h3>
+        <p class="chart-desc">Impact of transport-level packet drops on overall page load completion.</p>
+        <div class="chart-wrapper">
+          <canvas id="chart-loss"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 3: Connection Setup Time (Bar) -->
+      <div class="chart-card">
+        <h3>Connection Setup Latency</h3>
+        <p class="chart-desc">DNS Resolution + TCP/TLS or QUIC Crypto Handshake overhead in ms.</p>
+        <div class="chart-wrapper">
+          <canvas id="chart-setup"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 4: Radar Multi-dimension Comparison -->
+      <div class="chart-card">
+        <h3>Multi-Attribute Comparison Radar</h3>
+        <p class="chart-desc">Rated on a scale of 1-5 across core networking engineering parameters.</p>
+        <div class="chart-wrapper">
+          <canvas id="chart-radar"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analytical Findings Summary -->
+    <div class="glass-card" style="margin-top: 3.5rem;">
+      <h3 style="color:var(--accent-cyan); margin-bottom: 0.75rem;">Key Takeaways from the Data</h3>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.25rem;">
+        <div style="border-left: 2px solid var(--accent-cyan); padding-left: 1rem;">
+          <h4 style="font-size: 1rem; color:#fff;">Resilience Under Loss</h4>
+          <p style="font-size: 0.9rem; margin:0;">
+            At 5% packet loss, HTTP/1.1 load times surge by 289% and HTTP/2 by 313% due to TCP head-of-line blocking. HTTP/3 load times only increase by 26%.
+          </p>
+        </div>
+
+        <div style="border-left: 2px solid var(--accent-purple); padding-left: 1rem;">
+          <h4 style="font-size: 1rem; color:#fff;">Handshake Economy</h4>
+          <p style="font-size: 0.9rem; margin:0;">
+            QUIC reduces handshake overhead by ~86% compared to HTTP/1.1 (45ms vs 320ms) because transport negotiation and TLS 1.3 keys exchange simultaneously.
+          </p>
+        </div>
+
+        <div style="border-left: 2px solid var(--accent-green); padding-left: 1rem;">
+          <h4 style="font-size: 1rem; color:#fff;">Clean Fiber Equality</h4>
+          <p style="font-size: 0.9rem; margin:0;">
+            On zero-loss, low-RTT connections (e.g. gigabit fiber), HTTP/2 multiplexing achieves parity with HTTP/3. QUIC's greatest edge is on mobile and lossy links.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FR. CRCE Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>HTTP/3 Protocol Performance Evaluation</h4>
+          <p>An academic comparative study of transport-layer innovations from TCP/TLS to UDP-based QUIC, designed for the Department of Computer Engineering.</p>
+          <div class="crce-badge">
+            🏛️ Fr. Conceicao Rodrigues College of Engineering (FR. CRCE), Bandra (W), Mumbai
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <h5>Navigation</h5>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="background.html">Protocol Evolution</a></li>
+            <li><a href="live-demo.html">Live Browser Test</a></li>
+            <li><a href="results.html">Benchmark Results</a></li>
+            <li><a href="research.html">Paper Analysis</a></li>
+            <li><a href="conclusion.html">Conclusions & References</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-contact">
+          <h5>Project Team</h5>
+          <p style="font-size:0.9rem; margin-bottom:0.35rem;"><strong style="color:#fff;">Jeet Chavan</strong> — Roll No: 10584</p>
+          <p style="font-size:0.9rem; margin-bottom:0.35rem;"><strong style="color:#fff;">Ritu Ahirwar</strong> — Roll No: 10578</p>
+          <p style="font-size:0.9rem; margin-bottom:0.35rem;"><strong style="color:#fff;">Jeshrun Dehte</strong> — Roll No: 10593</p>
+          <p style="font-size:0.88rem; margin-top:0.4rem; color:var(--accent-cyan);">TE-A Computer Engineering | FR. CRCE</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 Jeet Chavan, Ritu Ahirwar, Jeshrun Dehte. Computer Networks Mini Project. All rights reserved.</div>
+        <div>Based on Mücke et al. ACM CoNEXT 2025 & RFC 9000</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
+  <script src="js/charts.js"></script>
+</body>
+</html>

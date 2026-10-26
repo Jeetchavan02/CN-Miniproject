@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conclusions & Academic References | HTTP/1.1 vs HTTP/2 vs HTTP/3</title>
+  <meta name="description" content="Final conclusions, 3 key takeaways, study limitations, IEEE/ACM citations, and project report download for the Computer Networks Mini Project.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Sticky Navbar -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="nav-brand">
+        <span class="brand-badge">QUIC</span>
+        <span>HTTP-Perf-Lab</span>
+      </a>
+
+      <button class="nav-toggle" aria-label="Toggle Navigation" aria-expanded="false">☰</button>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="background.html" class="nav-link">Background & Flow</a></li>
+        <li><a href="live-demo.html" class="nav-link">Live Measurement</a></li>
+        <li><a href="results.html" class="nav-link">Benchmark Results</a></li>
+        <li><a href="research.html" class="nav-link">Paper Analysis</a></li>
+        <li><a href="conclusion.html" class="nav-link">Conclusions</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="container section">
+    <div class="section-title">
+      <span class="badge badge-green">Project Synthesis</span>
+      <h2>Core Takeaways & Final Conclusions</h2>
+      <p>Summary of empirical findings, real-world deployment trade-offs, experimental constraints, and citations.</p>
+    </div>
+
+    <!-- 3 Key Takeaway Cards -->
+    <div class="takeaways-grid">
+      <!-- Takeaway 1 -->
+      <div class="takeaway-card">
+        <div class="takeaway-number">01</div>
+        <div class="takeaway-icon">⚡</div>
+        <h3 style="color:var(--accent-cyan);">QUIC Dramatically Reduces Handshake Latency</h3>
+        <p style="font-size:0.92rem; margin:0;">
+          By merging the transport layer connection establishment and the cryptographic TLS 1.3 parameter exchange into a single round trip (1-RTT), initial connection delay drops by <strong>75%–86%</strong> compared to TCP+TLS. Repeat connections leveraging 0-RTT send data immediately.
+        </p>
+      </div>
+
+      <!-- Takeaway 2 -->
+      <div class="takeaway-card">
+        <div class="takeaway-number">02</div>
+        <div class="takeaway-icon">🛡️</div>
+        <h3 style="color:#c77dff;">Superior Resilience Under Loss & High RTT</h3>
+        <p style="font-size:0.92rem; margin:0;">
+          Under 2% to 5% packet loss (characteristic of cellular 4G/5G and degraded Wi-Fi), HTTP/3 completes page loads <strong>3x to 4x faster</strong> than HTTP/2. Because streams are multiplexed independently at the transport layer, loss in one stream never freezes unrelated streams.
+        </p>
+      </div>
+
+      <!-- Takeaway 3 -->
+      <div class="takeaway-card">
+        <div class="takeaway-number">03</div>
+        <div class="takeaway-icon">⚖️</div>
+        <h3 style="color:var(--accent-yellow);">Modest Gains on Stable High-Speed Links</h3>
+        <p style="font-size:0.92rem; margin:0;">
+          On pristine zero-loss fiber links with low round-trip times, HTTP/2 remains competitive and may slightly reduce CPU load. The primary motivation for upgrading to HTTP/3 is user experience on mobile devices and edge resilience.
+        </p>
+      </div>
+    </div>
+
+    <!-- Limitations Section -->
+    <div class="glass-card" style="margin-bottom: 3.5rem;">
+      <h3 style="color:#ffffff; margin-bottom: 1rem;">Experimental & Academic Limitations</h3>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+        <div>
+          <h4 style="color:var(--accent-pink); font-size:1rem; margin-bottom:0.4rem;">1. Browser Cross-Origin Timing Security</h4>
+          <p style="font-size:0.88rem; margin:0;">
+            Browsers restrict exact sub-millisecond timestamps unless the remote origin sends explicit <code>Timing-Allow-Origin: *</code> headers to prevent cross-site side-channel timing attacks.
+          </p>
+        </div>
+
+        <div>
+          <h4 style="color:var(--accent-pink); font-size:1rem; margin-bottom:0.4rem;">2. Single-Client Lab Testing</h4>
+          <p style="font-size:0.88rem; margin:0;">
+            Our localized student tests evaluated single-client endpoints rather than massive multi-tenant ISP load testing or deep router queue buffering variations.
+          </p>
+        </div>
+
+        <div>
+          <h4 style="color:var(--accent-pink); font-size:1rem; margin-bottom:0.4rem;">3. Corporate UDP Filtering (Middleboxes)</h4>
+          <p style="font-size:0.88rem; margin:0;">
+            Certain institutional and legacy enterprise firewalls block outgoing UDP on port 443, forcing browsers to silently fall back to HTTP/2 over TCP.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- References List (IEEE / ACM Format) -->
+    <div style="margin-bottom: 3.5rem;">
+      <h3 style="margin-bottom: 1.25rem;">Academic References & Standards</h3>
+      <ul class="references-list">
+        <li class="reference-item">
+          <strong>[1]</strong> J. Mücke, M. Nawrocki, R. Hiesgen, P. Sattler, J. Zirngibl, G. Carle, J. Luxemburk, T. C. Schmidt, and M. Wählisch, "Waiting for QUIC: Passive Measurements to Understand QUIC Deployments," in <em>Proceedings of the ACM on Networking (ACM CoNEXT '25)</em>, 2025. doi: 10.1145/3768988.
+        </li>
+        <li class="reference-item">
+          <strong>[2]</strong> J. Iyengar and M. Thomson, Eds., "QUIC: A UDP-Based Multiplexed and Secure Transport," <em>RFC 9000</em>, IETF, May 2021. [Online]. Available: https://www.rfc-editor.org/rfc/rfc9000.html
+        </li>
+        <li class="reference-item">
+          <strong>[3]</strong> M. Bishop, Ed., "HTTP/3," <em>RFC 9114</em>, IETF Standards Track, June 2022. [Online]. Available: https://www.rfc-editor.org/rfc/rfc9114.html
+        </li>
+        <li class="reference-item">
+          <strong>[4]</strong> M. Belshe, R. Peon, and M. Thomson, "Hypertext Transfer Protocol Version 2 (HTTP/2)," <em>RFC 7540</em>, IETF, May 2015.
+        </li>
+        <li class="reference-item">
+          <strong>[5]</strong> E. Rescorla, "The Transport Layer Security (TLS) Protocol Version 1.3," <em>RFC 8446</em>, IETF, August 2018.
+        </li>
+      </ul>
+    </div>
+
+    <!-- Download / Print Report Card -->
+    <div class="glass-card" style="text-align:center; padding:3rem 2rem; border-color: rgba(0, 212, 255, 0.4);">
+      <h3 style="font-size:1.6rem; margin-bottom:0.75rem;">Download College Evaluation Report</h3>
+      <p style="max-width:600px; margin:0 auto 1.75rem; font-size:0.95rem;">
+        Generate a print-ready academic documentation summary or view this project offline for submission to the Department of Computer Engineering.
+      </p>
+
+      <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
+        <button onclick="window.print()" class="btn btn-primary" id="btn-print-report">
+          🖨️ Print / Save as PDF
+        </button>
+        <button class="btn btn-secondary btn-disabled" title="PDF download will be linked after departmental signing">
+          📄 Download Signed PDF (Pending)
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- FR. CRCE Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>HTTP/3 Protocol Performance Evaluation</h4>
+          <p>An academic comparative study of transport-layer innovations from TCP/TLS to UDP-based QUIC, designed for the Department of Computer Engineering.</p>
+          <div class="crce-badge">
+            🏛️ Fr. Conceicao Rodrigues College of Engineering (FR. CRCE), Bandra (W), Mumbai
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <h5>Navigation</h5>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="background.html">Protocol Evolution</a></li>
+            <li><a href="live-demo.html">Live Browser Test</a></li>
+            <li><a href="results.html">Benchmark Results</a></li>
+            <li><a href="research.html">Paper Analysis</a></li>
+            <li><a href="conclusion.html">Conclusions & References</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-contact">
+          <h5>Project Team</h5>
+          <p style="font-size:0.9rem; margin-bottom:0.35rem;"><strong style="color:#fff;">Jeet Chavan</strong> — Roll No: 10584</p>
+          <p style="font-size:0.9rem; margin-bottom:0.35rem;"><strong style="color:#fff;">Ritu Ahirwar</strong> — Roll No: 10578</p>
+          <p style="font-size:0.9rem; margin-bottom:0.35rem;"><strong style="color:#fff;">Jeshrun Dehte</strong> — Roll No: 10593</p>
+          <p style="font-size:0.88rem; margin-top:0.4rem; color:var(--accent-cyan);">TE-A Computer Engineering | FR. CRCE</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 Jeet Chavan, Ritu Ahirwar, Jeshrun Dehte. Computer Networks Mini Project. All rights reserved.</div>
+        <div>Based on Mücke et al. ACM CoNEXT 2025 & RFC 9000</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
+</body>
+</html>

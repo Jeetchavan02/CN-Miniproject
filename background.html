@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protocol Background & Handshakes | HTTP/1.1 vs HTTP/2 vs HTTP/3</title>
+  <meta name="description" content="Detailed historical evolution, animated SVG connection handshakes (TCP+TLS vs QUIC), Head-of-line blocking simulator, and interactive FAQ.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Sticky Navbar -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="nav-brand">
+        <span class="brand-badge">QUIC</span>
+        <span>HTTP-Perf-Lab</span>
+      </a>
+
+      <button class="nav-toggle" aria-label="Toggle Navigation" aria-expanded="false">☰</button>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="background.html" class="nav-link">Background & Flow</a></li>
+        <li><a href="live-demo.html" class="nav-link">Live Measurement</a></li>
+        <li><a href="results.html" class="nav-link">Benchmark Results</a></li>
+        <li><a href="research.html" class="nav-link">Paper Analysis</a></li>
+        <li><a href="conclusion.html" class="nav-link">Conclusions</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="container section">
+    <!-- Page Header -->
+    <div class="section-title">
+      <span class="badge badge-purple">Architectural Evolution</span>
+      <h2>Protocol Evolution & Transport Architecture</h2>
+      <p>From multiple uncoordinated TCP sockets to stream multiplexing, and finally to modern UDP-based QUIC.</p>
+    </div>
+
+    <!-- Timeline: 1997 to 2022 -->
+    <div class="timeline">
+      <!-- Item 1: HTTP/1.1 -->
+      <div class="timeline-item left">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">1997 - RFC 2616</div>
+        <div class="glass-card" style="padding:1.4rem;">
+          <h3 style="color:#ffd166;">HTTP/1.1 (Persistent TCP)</h3>
+          <p style="margin:0; font-size:0.95rem;">
+            Introduced keep-alive connections to reuse TCP sockets, but requests had to be processed sequentially (FIFO). Suffered severely from HTTP head-of-line blocking and domain sharding hacks.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 2: HTTP/2 -->
+      <div class="timeline-item right">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2015 - RFC 7540</div>
+        <div class="glass-card" style="padding:1.4rem;">
+          <h3 style="color:#c77dff;">HTTP/2 (Binary Multiplexing)</h3>
+          <p style="margin:0; font-size:0.95rem;">
+            Replaced plain text with binary framing, stream multiplexing over a single TCP connection, and HPACK header compression. Solved HTTP HoL, but inherited transport-layer TCP HoL blocking.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 3: HTTP/3 -->
+      <div class="timeline-item left">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2022 - RFC 9000 / 9114</div>
+        <div class="glass-card" style="padding:1.4rem;">
+          <h3 style="color:var(--accent-cyan);">HTTP/3 & QUIC (UDP Native)</h3>
+          <p style="margin:0; font-size:0.95rem;">
+            Moves transport from OS kernel TCP to encrypted UDP in user-space. Native independent streams, combined TLS 1.3 cryptographic handshake (1-RTT / 0-RTT), and connection migration via 64-bit Connection IDs.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Animated SVG Handshake Comparison -->
+    <div class="section-title" style="margin-top: 4rem;">
+      <span class="badge">Connection Setup Overhead</span>
+      <h2>Animated Handshake Sequence: TCP+TLS vs QUIC</h2>
+      <p>Watch step-by-step how QUIC converges connection setup into a single Round Trip Time (1-RTT) compared to legacy TCP + TLS 1.3.</p>
+    </div>
+
+    <div style="text-align:center; margin-bottom:1.5rem;">
+      <button class="btn btn-primary" id="replay-handshake-btn">▶ Replay Sequential Handshake</button>
+    </div>
+
+    <div class="diagram-container">
+      <!-- TCP + TLS Box -->
+      <div class="diagram-box">
+        <div class="diagram-header">
+          <div>
+            <h3 style="color:#ffd166;">HTTP/1.1 & HTTP/2 (TCP + TLS 1.3)</h3>
+            <span style="font-size:0.85rem; color:var(--text-dim);">Latency: 2 to 3 RTTs before HTTP Request</span>
+          </div>
+          <span class="badge">Legacy</span>
+        </div>
+
+        <div class="diagram-svg-wrap">
+          <svg id="tcp-handshake-svg" class="diagram-svg" viewBox="0 0 350 370">
+            <!-- Client Line -->
+            <line x1="65" y1="30" x2="65" y2="350" stroke="#64748b" stroke-width="2" stroke-dasharray="4" />
+            <text x="65" y="20" fill="#cbd5e1" font-size="12" font-weight="700" text-anchor="middle">CLIENT</text>
+
+            <!-- Server Line -->
+            <line x1="285" y1="30" x2="285" y2="350" stroke="#64748b" stroke-width="2" stroke-dasharray="4" />
+            <text x="285" y="20" fill="#cbd5e1" font-size="12" font-weight="700" text-anchor="middle">SERVER</text>
+
+            <!-- Dynamic Animated Arrows injected here -->
+            <g class="dynamic-arrows"></g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- QUIC Handshake Box -->
+      <div class="diagram-box" style="border-color: rgba(0, 212, 255, 0.4);">
+        <div class="diagram-header">
+          <div>
+            <h3 style="color:var(--accent-cyan);">HTTP/3 (QUIC over UDP)</h3>
+            <span style="font-size:0.85rem; color:var(--text-dim);">Latency: 1-RTT initial / 0-RTT resumption</span>
+          </div>
+          <span class="badge badge-green">Modern QUIC</span>
+        </div>
+
+        <div class="diagram-svg-wrap">
+          <svg id="quic-handshake-svg" class="diagram-svg" viewBox="0 0 350 370">
+            <!-- Client Line -->
+            <line x1="65" y1="30" x2="65" y2="350" stroke="#64748b" stroke-width="2" stroke-dasharray="4" />
+            <text x="65" y="20" fill="#cbd5e1" font-size="12" font-weight="700" text-anchor="middle">CLIENT</text>
+
+            <!-- Server Line -->
+            <line x1="285" y1="30" x2="285" y2="350" stroke="#64748b" stroke-width="2" stroke-dasharray="4" />
+            <text x="285" y="20" fill="#cbd5e1" font-size="12" font-weight="700" text-anchor="middle">SERVER</text>
+
+            <!-- Dynamic Animated Arrows injected here -->
+            <g class="dynamic-arrows"></g>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Head of Line (HoL) Blocking Interactive Explainer -->
+    <div class="hol-container">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <h3>Interactive Head-of-Line (HoL) Blocking Explainer</h3>
+          <p style="margin:0; font-size:0.95rem;">
+            Click below to drop a single packet in Stream A and watch how TCP forces unaffected streams to stall, whereas QUIC continues uninterrupted.
+          </p>
+        </div>
+        <button class="btn btn-primary" id="simulate-loss-btn">💥 Simulate 1 Dropped Packet</button>
+      </div>
+
+      <div class="hol-streams">
+        <div>
+          <h4 style="color:#ffd166; font-size:1rem; margin-bottom:0.4rem;">HTTP/2 (Single Shared TCP Byte Stream)</h4>
+          <div class="stream-row" id="h2-hol-stream">
+            <div class="stream-label">TCP Pipe (Streams A + B)</div>
+            <div class="stream-track">
+              <div class="packet-pill packet-ok">Stream A (Pkt 1) ✓</div>
+              <div class="packet-pill packet-ok">Stream A (Pkt 2) ✓</div>
+              <div class="packet-pill packet-ok">Stream A (Pkt 3) ✓</div>
+              <div class="packet-pill packet-ok">Stream B (Pkt 1) ✓</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 style="color:var(--accent-cyan); font-size:1rem; margin-bottom:0.4rem;">HTTP/3 (QUIC Independent Transport Streams)</h4>
+          <div class="stream-row" id="h3-hol-stream" style="border-left-color: var(--accent-green);">
+            <div class="stream-label">QUIC Streams (Over UDP)</div>
+            <div class="stream-track">
+              <div class="packet-pill packet-ok">Stream A (Pkt 1) ✓</div>
+              <div class="packet-pill packet-ok">Stream A (Pkt 2) ✓</div>
+              <div class="packet-pill packet-ok">Stream A (Pkt 3) ✓</div>
+              <div class="packet-pill packet-ok">Stream B (Pkt 1) ✓</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert-box" id="hol-status-note" style="margin-top:1.5rem;">
+        <span class="alert-icon">ℹ️</span>
+        <div>Click <strong>"Simulate 1 Dropped Packet"</strong> to observe how TCP head-of-line blocking degrades performance under realistic packet loss.</div>
+      </div>
+    </div>
+
+    <!-- Accordion FAQ -->
+    <div class="section-title" style="margin-top: 5rem;">
+      <span class="badge badge-purple">Core Concepts</span>
+      <h2>Frequently Asked Questions</h2>
+      <p>Technical details regarding QUIC, transport protocol design, and zero round-trip handshakes.</p>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item active">
+        <button class="faq-question">
+          <span>What exactly is QUIC?</span>
+          <span class="faq-icon">▼</span>
+        </button>
+        <div class="faq-answer">
+          QUIC (Quick UDP Internet Connections) is a modern transport layer network protocol designed initially by Jim Roskind at Google in 2012 and formally standardized by the IETF in RFC 9000 (May 2021). It replaces the combination of TCP and TLS by implementing encryption, congestion control, flow control, and stream multiplexing directly on top of UDP in user-space.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Why did QUIC build on UDP instead of creating a brand new IP transport protocol?</span>
+          <span class="faq-icon">▼</span>
+        </button>
+        <div class="faq-answer">
+          The public internet suffers from "protocol ossification": middleboxes (firewalls, NAT gateways, stateful routers) across ISPs drop any IP protocol numbers other than 6 (TCP) and 17 (UDP). Creating a new transport protocol (like SCTP) would cause up to 30-50% connection drop rates globally. By encapsulating traffic in UDP packets, QUIC traverses existing internet infrastructure seamlessly without requiring hardware firmware upgrades across millions of routers.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>What is 0-RTT Connection Resumption and how is it secure?</span>
+          <span class="faq-icon">▼</span>
+        </button>
+        <div class="faq-answer">
+          0-RTT (Zero Round-Trip Time) allows a returning client to transmit encrypted application data (like an HTTP GET request) inside the very first packet sent to the server. It utilizes cryptographic session tickets and pre-shared keys (PSK) cached from a previous TLS 1.3 handshake. While 0-RTT is vulnerable to replay attacks, QUIC servers mitigate this by restricting 0-RTT strictly to idempotent requests or implementing short anti-replay server timestamps.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>How does QUIC solve TCP's Connection Migration problem?</span>
+          <span class="faq-icon">▼</span>
+        </button>
+        <div class="faq-answer">
+          TCP identifies connections by a 4-tuple: (Source IP, Source Port, Dest IP, Dest Port). When a mobile device switches from Wi-Fi to 4G/5G, its IP changes, forcibly terminating the TCP socket and requiring full renegotiation. QUIC uses a 64-bit Connection ID (CID) independent of IP and port numbers. Even if the client's network interface switches, the CID remains valid, allowing active video streams or downloads to continue uninterrupted.
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FR. CRCE Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>HTTP/3 Protocol Performance Evaluation</h4>
+          <p>An academic comparative study of transport-layer innovations from TCP/TLS to UDP-based QUIC, designed for the Department of Computer Engineering.</p>
+          <div class="crce-badge">
+            🏛️ Fr. Conceicao Rodrigues College of Engineering (FR. CRCE), Bandra (W), Mumbai
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <h5>Navigation</h5>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="background.html">Protocol Evolution</a></li>
+            <li><a href="live-demo.html">Live Browser Test</a></li>
+            <li><a href="results.html">Benchmark Charts</a></li>
+            <li><a href="research.html">Paper Analysis</a></li>
+            <li><a href="conclusion.html">Conclusions & References</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-contact">
+          <h5>Project Team</h5>
+          <p style="font-size:0.9rem; margin-bottom:0.35rem;"><strong style="color:#fff;">Jeet Chavan</strong> — Roll No: 10584</p>
+          <p style="font-size:0.9rem; margin-bottom:0.35rem;"><strong style="color:#fff;">Ritu Ahirwar</strong> — Roll No: 10578</p>
+          <p style="font-size:0.9rem; margin-bottom:0.35rem;"><strong style="color:#fff;">Jeshrun Dehte</strong> — Roll No: 10593</p>
+          <p style="font-size:0.88rem; margin-top:0.4rem; color:var(--accent-cyan);">TE-A Computer Engineering | FR. CRCE</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 Jeet Chavan, Ritu Ahirwar, Jeshrun Dehte. Computer Networks Mini Project. All rights reserved.</div>
+        <div>Based on Mücke et al. ACM CoNEXT 2025 & RFC 9000</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
+  <script src="js/animations.js"></script>
+</body>
+</html>

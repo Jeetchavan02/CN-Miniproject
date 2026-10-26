@@ -1,0 +1,33 @@
+{
+  "protocols": ["HTTP/1.1", "HTTP/2", "HTTP/3"],
+  "avgLoadTime": [1850, 920, 640],
+  "loadVsPacketLoss": {
+    "packetLoss": [0, 1, 2, 5],
+    "http1": [1850, 2900, 4100, 7200],
+    "http2": [920, 1400, 2100, 3800],
+    "http3": [640, 680, 720, 810]
+  },
+  "connectionSetup": [320, 180, 45],
+  "radarData": {
+    "labels": ["Speed", "Loss Resilience", "Low Latency", "Multiplexing", "Security"],
+    "http1": [2, 1, 2, 1, 2],
+    "http2": [4, 3, 3, 4, 4],
+    "http3": [5, 5, 5, 5, 5]
+  },
+  "paperResults": {
+    "avgLoadTime": [2100, 1050, 710],
+    "loadVsPacketLoss": {
+      "packetLoss": [0, 1, 2, 5],
+      "http1": [2100, 3200, 4800, 8600],
+      "http2": [1050, 1620, 2450, 4200],
+      "http3": [710, 740, 790, 890]
+    },
+    "connectionSetup": [360, 200, 52],
+    "radarData": {
+      "labels": ["Speed", "Loss Resilience", "Low Latency", "Multiplexing", "Security"],
+      "http1": [2, 1, 2, 1, 2],
+      "http2": [4, 2.8, 3.2, 4.2, 4],
+      "http3": [4.8, 4.9, 4.9, 5, 5]
+    }
+  }
+}
