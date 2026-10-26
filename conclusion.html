@@ -7,6 +7,8 @@
   <title>Comprehensive Mini Project Report | HTTP/1.1 vs HTTP/2 vs HTTP/3</title>
   <meta name="description" content="Official academic mini-project report for Computer Networks: Performance Comparison of HTTP/1.1 vs HTTP/2 vs HTTP/3 (QUIC) based on Mücke et al., ACM CoNEXT 2025. FR. CRCE.">
   <link rel="stylesheet" href="css/style.css">
+  <!-- Chart.js CDN for Report Visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -248,38 +250,14 @@
           </table>
         </div>
 
-        <!-- Visual Bar Chart Representation -->
-        <div style="margin-top: 1rem; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-glass);">
-          <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.75rem;">Graphical Distribution (Our Lab vs Paper Baseline):</div>
-          
-          <div style="margin-bottom: 0.75rem;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 0.25rem;">
-              <span><strong>HTTP/1.1:</strong> 1,850 ms (Lab) / 2,100 ms (Paper)</span>
-              <span style="color: var(--text-dim);">Sequential FIFO Bottleneck</span>
-            </div>
-            <div style="background: rgba(255,255,255,0.06); height: 18px; border-radius: 4px; overflow: hidden; position: relative;">
-              <div style="background: #4361ee; width: 88%; height: 100%; border-radius: 4px;"></div>
-            </div>
+        <!-- Chart 1 Interactive Canvas & Visualizer -->
+        <div class="chart-card" style="margin-top: 1.25rem; background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: var(--radius-md); padding: 1.25rem; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem;">
+            <h5 style="margin: 0; font-size: 0.95rem; color: #0f172a; font-weight: 700;">Graphical Visualization: Average Page Load Time (ms)</h5>
+            <div style="font-size: 0.8rem; color: #64748b; font-family: var(--font-mono);">Colors: Royal Blue (H1) | Purple (H2) | Cyan (H3)</div>
           </div>
-
-          <div style="margin-bottom: 0.75rem;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 0.25rem;">
-              <span><strong>HTTP/2:</strong> 920 ms (Lab) / 1,050 ms (Paper)</span>
-              <span style="color: #c77dff;">~50% Latency Reduction</span>
-            </div>
-            <div style="background: rgba(255,255,255,0.06); height: 18px; border-radius: 4px; overflow: hidden; position: relative;">
-              <div style="background: #9d4edd; width: 44%; height: 100%; border-radius: 4px;"></div>
-            </div>
-          </div>
-
-          <div>
-            <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 0.25rem;">
-              <span><strong>HTTP/3 (QUIC):</strong> 640 ms (Lab) / 710 ms (Paper)</span>
-              <span style="color: var(--accent-cyan); font-weight: 700;">Fastest Completion (65.4% Faster)</span>
-            </div>
-            <div style="background: rgba(255,255,255,0.06); height: 18px; border-radius: 4px; overflow: hidden; position: relative;">
-              <div style="background: var(--accent-cyan); width: 30%; height: 100%; border-radius: 4px;"></div>
-            </div>
+          <div class="chart-wrapper" style="position: relative; height: 260px; width: 100%;">
+            <canvas id="report-chart-avg-load"></canvas>
           </div>
         </div>
       </div>
@@ -370,6 +348,17 @@
             <div style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5;">
               Over the same 0% to 5% impairment, HTTP/3 rises from <strong>640 ms to only 810 ms (+26.5% delta)</strong>. Unaffected UDP streams proceed without wait, proving complete transport HoL immunity.
             </div>
+          </div>
+        </div>
+
+        <!-- Chart 2 Interactive Canvas & Line Plot -->
+        <div class="chart-card" style="margin-top: 1.25rem; background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: var(--radius-md); padding: 1.25rem; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem;">
+            <h5 style="margin: 0; font-size: 0.95rem; color: #0f172a; font-weight: 700;">Graphical Visualization: Degradation Curves Under Loss (0% to 5%)</h5>
+            <div style="font-size: 0.8rem; color: #64748b; font-family: var(--font-mono);">Solid Curves: HTTP/1.1 (Blue) | HTTP/2 (Purple) | HTTP/3 (Cyan)</div>
+          </div>
+          <div class="chart-wrapper" style="position: relative; height: 280px; width: 100%;">
+            <canvas id="report-chart-loss"></canvas>
           </div>
         </div>
       </div>
