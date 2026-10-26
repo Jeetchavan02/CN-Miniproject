@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>(function(){const t=localStorage.getItem("quiclab-theme")||"dark";document.documentElement.setAttribute("data-theme",t);})();</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Live Measurement Tool | Performance API Benchmarks</title>
@@ -172,7 +173,7 @@
     <div class="container nav-container">
       <a href="index.html" class="nav-brand">
         <span class="brand-badge">QUIC</span>
-        <span>HTTP-Perf-Lab</span>
+        <span>LAB</span>
       </a>
 
       <button class="nav-toggle" aria-label="Toggle Navigation" aria-expanded="false">☰</button>
@@ -199,7 +200,7 @@
 
     <!-- Alert Box: 1-Click Browser Measurement Notice -->
     <div class="alert-box">
-      <span class="alert-icon">⚡</span>
+      <span class="alert-icon"><svg class="ui-icon" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg></span>
       <div>
         <strong>1-Click Instant Diagnostics:</strong> Click any protocol button below to perform real-time latency decomposition (DNS lookup, TCP connect, TLS cryptographic handshake, and TTFB). No manual DevTools throttling or external network setup required.
       </div>
@@ -215,7 +216,7 @@
           <span>Measure HTTP/2</span>
         </button>
         <button class="btn-measure btn-http3" id="measure-http3" onclick="window.runMeasurement('HTTP/3')">
-          <span>⚡ Measure HTTP/3 (QUIC)</span>
+          <span><svg class="ui-icon" viewBox="0 0 24 24" style="margin-right:0.35rem;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>Measure HTTP/3 (QUIC)</span>
         </button>
       </div>
 
@@ -228,7 +229,7 @@
     <div class="metrics-cards-grid">
       <!-- HTTP/1.1 Card -->
       <div class="metric-card" id="card-http1">
-        <span class="fastest-pill" id="http1-fastest">Fastest 🏆</span>
+        <span class="fastest-pill" id="http1-fastest"><svg class="ui-icon" viewBox="0 0 24 24" style="margin-right:0.25rem;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>Fastest</span>
         <div class="metric-card-top">
           <h3>HTTP/1.1</h3>
           <span class="badge status-text">Idle</span>
@@ -247,7 +248,7 @@
 
       <!-- HTTP/2 Card -->
       <div class="metric-card" id="card-http2">
-        <span class="fastest-pill" id="http2-fastest">Fastest 🏆</span>
+        <span class="fastest-pill" id="http2-fastest"><svg class="ui-icon" viewBox="0 0 24 24" style="margin-right:0.25rem;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>Fastest</span>
         <div class="metric-card-top">
           <h3>HTTP/2</h3>
           <span class="badge badge-purple status-text">Idle</span>
@@ -266,7 +267,7 @@
 
       <!-- HTTP/3 Card -->
       <div class="metric-card" id="card-http3">
-        <span class="fastest-pill" id="http3-fastest">Fastest 🏆</span>
+        <span class="fastest-pill" id="http3-fastest"><svg class="ui-icon" viewBox="0 0 24 24" style="margin-right:0.25rem;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>Fastest</span>
         <div class="metric-card-top">
           <h3>HTTP/3 (QUIC)</h3>
           <span class="badge badge-green status-text">Idle</span>
@@ -336,7 +337,7 @@
           <h4>HTTP/3 Protocol Performance Evaluation</h4>
           <p>An academic comparative study of transport-layer innovations from TCP/TLS to UDP-based QUIC, designed for the Department of Computer Engineering.</p>
           <div class="crce-badge">
-            🏛️ Fr. Conceicao Rodrigues College of Engineering (FR. CRCE), Bandra (W), Mumbai
+            <svg class="ui-icon ui-icon-stroke" viewBox="0 0 24 24" style="margin-right:0.35rem;"><path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 2L2 7h20L12 2z"></path></svg>Fr. Conceicao Rodrigues College of Engineering (FR. CRCE), Bandra (W), Mumbai
           </div>
         </div>
 

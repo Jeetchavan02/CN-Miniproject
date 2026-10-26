@@ -142,19 +142,19 @@ function initHOLBlockingDemo() {
 
     // In HTTP/2: Packet 2 in Stream A is lost -> All subsequent packets in Stream A and Stream B wait for TCP retransmission
     h2Container.innerHTML = `
-      <div class="packet-pill packet-ok">Stream A (Pkt 1) ✓</div>
-      <div class="packet-pill packet-lost">Stream A (Pkt 2) ❌ LOST</div>
-      <div class="packet-pill packet-blocked">Stream A (Pkt 3) ⏳ BLOCKED</div>
-      <div class="packet-pill packet-blocked">Stream B (Pkt 1) ⏳ BLOCKED (TCP HOL)</div>
+      <div class="packet-pill packet-ok">Stream A (Pkt 1) [OK]</div>
+      <div class="packet-pill packet-lost">Stream A (Pkt 2) [LOST]</div>
+      <div class="packet-pill packet-blocked">Stream A (Pkt 3) [BLOCKED]</div>
+      <div class="packet-pill packet-blocked">Stream B (Pkt 1) [TCP HOL BLOCKED]</div>
     `;
 
     // In HTTP/3: Packet 2 in Stream A is lost -> Stream A waits, but Stream B processes completely independently!
     h3Container.innerHTML = `
-      <div class="packet-pill packet-ok">Stream A (Pkt 1) ✓</div>
-      <div class="packet-pill packet-lost">Stream A (Pkt 2) ❌ LOST</div>
-      <div class="packet-pill packet-ok" style="border-style:dashed;">Stream A (Pkt 3) ⏳ Buffering</div>
-      <div class="packet-pill packet-ok" style="background:rgba(0,212,255,0.25); border-color:#00d4ff;">Stream B (Pkt 1) 🚀 DELIVERED!</div>
-      <div class="packet-pill packet-ok" style="background:rgba(0,212,255,0.25); border-color:#00d4ff;">Stream B (Pkt 2) 🚀 DELIVERED!</div>
+      <div class="packet-pill packet-ok">Stream A (Pkt 1) [OK]</div>
+      <div class="packet-pill packet-lost">Stream A (Pkt 2) [LOST]</div>
+      <div class="packet-pill packet-ok" style="border-style:dashed;">Stream A (Pkt 3) [BUFFERING]</div>
+      <div class="packet-pill packet-ok" style="background:rgba(0,212,255,0.25); border-color:#00d4ff;">Stream B (Pkt 1) [DELIVERED]</div>
+      <div class="packet-pill packet-ok" style="background:rgba(0,212,255,0.25); border-color:#00d4ff;">Stream B (Pkt 2) [DELIVERED]</div>
     `;
 
     if (statusNote) {
@@ -167,11 +167,11 @@ function initHOLBlockingDemo() {
       const lostH2 = h2Container.querySelector('.packet-lost');
       if (lostH2) {
         lostH2.className = 'packet-pill packet-ok';
-        lostH2.textContent = 'Stream A (Pkt 2) ↻ Retransmitted';
+        lostH2.textContent = 'Stream A (Pkt 2) [RETRANSMITTED]';
       }
       h2Container.querySelectorAll('.packet-blocked').forEach(el => {
         el.className = 'packet-pill packet-ok';
-        el.textContent = el.textContent.replace('⏳ BLOCKED (TCP HOL)', '✓ Resumed').replace('⏳ BLOCKED', '✓ Resumed');
+        el.textContent = el.textContent.replace('[TCP HOL BLOCKED]', '[RESUMED]').replace('[BLOCKED]', '[RESUMED]');
       });
 
       triggerBtn.disabled = false;

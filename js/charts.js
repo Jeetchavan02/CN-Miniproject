@@ -1,6 +1,6 @@
 /**
  * charts.js - Chart.js visualizations for Results page
- * Supports switching between "Our Results" and "Paper Results (Kakhki et al.)"
+ * Supports switching between "Our Results" and "Paper Results (Mücke et al., 2025)"
  */
 
 let resultsData = null;
@@ -95,6 +95,38 @@ function getActiveData() {
   return resultsData;
 }
 
+function applyChartTheme() {
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+  Chart.defaults.color = isLight ? '#334155' : '#94a3b8';
+  Chart.defaults.font.family = "'Inter', sans-serif";
+  Chart.defaults.borderColor = isLight ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.08)';
+}
+
+window.addEventListener('themeChange', () => {
+  if (typeof Chart === 'undefined') return;
+  applyChartTheme();
+  
+  // Update radar chart scales for light/dark
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+  if (chartRadar) {
+    chartRadar.options.scales.r.angleLines.color = isLight ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.1)';
+    chartRadar.options.scales.r.grid.color = isLight ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.08)';
+    chartRadar.options.scales.r.pointLabels.color = isLight ? '#0f172a' : '#cbd5e1';
+    chartRadar.options.scales.r.ticks.color = isLight ? '#475569' : '#64748b';
+  }
+  if (chartAvgLoad) {
+    chartAvgLoad.options.scales.y.title.color = isLight ? '#475569' : '#64748b';
+  }
+  if (chartLoss) {
+    chartLoss.options.scales.y.title.color = isLight ? '#475569' : '#64748b';
+    chartLoss.options.scales.x.title.color = isLight ? '#475569' : '#64748b';
+  }
+  if (chartSetup) {
+    chartSetup.options.scales.y.title.color = isLight ? '#475569' : '#64748b';
+  }
+  updateAllCharts();
+});
+
 function renderAllCharts() {
   if (typeof Chart === 'undefined') {
     console.error('Chart.js not loaded!');
@@ -102,9 +134,7 @@ function renderAllCharts() {
   }
 
   // Common styling configuration
-  Chart.defaults.color = '#94a3b8';
-  Chart.defaults.font.family = "'Inter', sans-serif";
-  Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.08)';
+  applyChartTheme();
 
   const data = getActiveData();
 

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>(function(){const t=localStorage.getItem("quiclab-theme")||"dark";document.documentElement.setAttribute("data-theme",t);})();</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Protocol Background & Handshakes | HTTP/1.1 vs HTTP/2 vs HTTP/3</title>
@@ -14,7 +15,7 @@
     <div class="container nav-container">
       <a href="index.html" class="nav-brand">
         <span class="brand-badge">QUIC</span>
-        <span>HTTP-Perf-Lab</span>
+        <span>LAB</span>
       </a>
 
       <button class="nav-toggle" aria-label="Toggle Navigation" aria-expanded="false">☰</button>
@@ -85,7 +86,7 @@
     </div>
 
     <div style="text-align:center; margin-bottom:1.5rem;">
-      <button class="btn btn-primary" id="replay-handshake-btn">▶ Replay Sequential Handshake</button>
+      <button class="btn btn-primary" id="replay-handshake-btn"><svg class="ui-icon" viewBox="0 0 24 24" style="margin-right:0.35rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>Replay Sequential Handshake</button>
     </div>
 
     <div class="diagram-container">
@@ -151,7 +152,7 @@
             Click below to drop a single packet in Stream A and watch how TCP forces unaffected streams to stall, whereas QUIC continues uninterrupted.
           </p>
         </div>
-        <button class="btn btn-primary" id="simulate-loss-btn">💥 Simulate 1 Dropped Packet</button>
+        <button class="btn btn-primary" id="simulate-loss-btn"><svg class="ui-icon ui-icon-stroke" viewBox="0 0 24 24" style="margin-right:0.35rem;"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>Simulate 1 Dropped Packet</button>
       </div>
 
       <div class="hol-streams">
@@ -160,10 +161,10 @@
           <div class="stream-row" id="h2-hol-stream">
             <div class="stream-label">TCP Pipe (Streams A + B)</div>
             <div class="stream-track">
-              <div class="packet-pill packet-ok">Stream A (Pkt 1) ✓</div>
-              <div class="packet-pill packet-ok">Stream A (Pkt 2) ✓</div>
-              <div class="packet-pill packet-ok">Stream A (Pkt 3) ✓</div>
-              <div class="packet-pill packet-ok">Stream B (Pkt 1) ✓</div>
+              <div class="packet-pill packet-ok">Stream A (Pkt 1) [OK]</div>
+              <div class="packet-pill packet-ok">Stream A (Pkt 2) [OK]</div>
+              <div class="packet-pill packet-ok">Stream A (Pkt 3) [OK]</div>
+              <div class="packet-pill packet-ok">Stream B (Pkt 1) [OK]</div>
             </div>
           </div>
         </div>
@@ -173,10 +174,10 @@
           <div class="stream-row" id="h3-hol-stream" style="border-left-color: var(--accent-green);">
             <div class="stream-label">QUIC Streams (Over UDP)</div>
             <div class="stream-track">
-              <div class="packet-pill packet-ok">Stream A (Pkt 1) ✓</div>
-              <div class="packet-pill packet-ok">Stream A (Pkt 2) ✓</div>
-              <div class="packet-pill packet-ok">Stream A (Pkt 3) ✓</div>
-              <div class="packet-pill packet-ok">Stream B (Pkt 1) ✓</div>
+              <div class="packet-pill packet-ok">Stream A (Pkt 1) [OK]</div>
+              <div class="packet-pill packet-ok">Stream A (Pkt 2) [OK]</div>
+              <div class="packet-pill packet-ok">Stream A (Pkt 3) [OK]</div>
+              <div class="packet-pill packet-ok">Stream B (Pkt 1) [OK]</div>
             </div>
           </div>
         </div>
@@ -246,7 +247,7 @@
           <h4>HTTP/3 Protocol Performance Evaluation</h4>
           <p>An academic comparative study of transport-layer innovations from TCP/TLS to UDP-based QUIC, designed for the Department of Computer Engineering.</p>
           <div class="crce-badge">
-            🏛️ Fr. Conceicao Rodrigues College of Engineering (FR. CRCE), Bandra (W), Mumbai
+            <svg class="ui-icon ui-icon-stroke" viewBox="0 0 24 24" style="margin-right:0.35rem;"><path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 2L2 7h20L12 2z"></path></svg>Fr. Conceicao Rodrigues College of Engineering (FR. CRCE), Bandra (W), Mumbai
           </div>
         </div>
 

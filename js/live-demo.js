@@ -5,9 +5,16 @@
 
 const testResults = [];
 
+function getPrefix(protocol) {
+  if (protocol.indexOf('1') !== -1) return 'http1';
+  if (protocol.indexOf('2') !== -1) return 'http2';
+  if (protocol.indexOf('3') !== -1) return 'http3';
+  return 'http1';
+}
+
 function runMeasurement(protocol) {
   try {
-    const prefix = protocol.toLowerCase().replace('.', '');
+    const prefix = getPrefix(protocol);
     const card = document.getElementById(`card-${prefix}`);
     const btn = document.getElementById(`measure-${prefix}`) || document.querySelector(`.btn-${prefix}`);
 
@@ -81,7 +88,7 @@ function runMeasurement(protocol) {
 }
 
 function updateProtocolCard(protocol, data) {
-  const prefix = protocol.toLowerCase().replace('.', '');
+  const prefix = getPrefix(protocol);
   const dnsEl = document.getElementById(`${prefix}-dns`);
   const tcpEl = document.getElementById(`${prefix}-tcp`);
   const tlsEl = document.getElementById(`${prefix}-tls`);
@@ -129,7 +136,7 @@ function highlightFastest() {
   document.querySelectorAll('.fastest-pill').forEach(el => el.classList.remove('show'));
 
   if (fastestItem) {
-    const prefix = fastestItem.protocol.toLowerCase().replace('.', '');
+    const prefix = getPrefix(fastestItem.protocol);
     const fastestPill = document.getElementById(`${prefix}-fastest`);
     if (fastestPill) {
       fastestPill.classList.add('show');
