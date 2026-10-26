@@ -1745,13 +1745,35 @@ a:hover {
    ========================================================================== */
 @media print {
   *, *::before, *::after {
-    background: transparent !important;
     color: #0f172a !important; /* High-contrast dark ink for crisp text */
     box-shadow: none !important;
     text-shadow: none !important;
     filter: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  /* Preserve canvas rendering, chart cards, and backgrounds in PDF/print */
+  canvas {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .chart-card {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .chart-wrapper {
+    position: relative !important;
+    width: 100% !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 
   body {

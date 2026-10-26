@@ -51,7 +51,7 @@
         <button onclick="toggleFullReport()" class="btn btn-secondary" id="btn-toggle-report" style="padding: 0.75rem 1.25rem; font-size: 0.92rem;">
           <svg class="ui-icon ui-icon-stroke" viewBox="0 0 24 24" style="margin-right:0.4rem;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg><span id="toggle-report-text">View Full 8-Section Report</span>
         </button>
-        <button onclick="window.print()" class="btn btn-primary" id="btn-print-report" style="padding: 0.75rem 1.5rem; font-size: 0.95rem;">
+        <button onclick="exportReportToPDF()" class="btn btn-primary" id="btn-print-report" style="padding: 0.75rem 1.5rem; font-size: 0.95rem;">
           <svg class="ui-icon ui-icon-stroke" viewBox="0 0 24 24" style="margin-right:0.4rem;"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>Download Report (PDF)
         </button>
       </div>
@@ -144,7 +144,7 @@
           <button onclick="toggleFullReport()" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
             Read Full Documentation ↓
           </button>
-          <button onclick="window.print()" class="btn btn-primary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+          <button onclick="exportReportToPDF()" class="btn btn-primary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
             Export Official PDF ↗
           </button>
         </div>
@@ -810,14 +810,23 @@
     }
 
     let reportChartsInitialized = false;
+    let chartInstances = [];
+
     function initReportCharts() {
       if (reportChartsInitialized || typeof Chart === 'undefined') return;
       reportChartsInitialized = true;
 
+      // Common chart options to ensure synchronous rendering with zero animation lag
+      const commonPrintOptions = {
+        animation: false,
+        responsive: true,
+        maintainAspectRatio: false
+      };
+
       // Chart 1: Average Page Load Time in Report
       const ctx1 = document.getElementById('report-chart-avg-load')?.getContext('2d');
       if (ctx1) {
-        new Chart(ctx1, {
+        chartInstances.push(new Chart(ctx1, {
           type: 'bar',
           data: {
             labels: ['HTTP/1.1 (TCP)', 'HTTP/2 (Multiplexed)', 'HTTP/3 (QUIC)'],
@@ -825,7 +834,7 @@
               {
                 label: 'Our Lab Results (ms)',
                 data: [1850, 920, 640],
-                backgroundColor: ['rgba(67, 97, 238, 0.8)', 'rgba(157, 78, 221, 0.8)', 'rgba(0, 212, 255, 0.85)'],
+                backgroundColor: ['rgba(67, 97, 238, 0.85)', 'rgba(157, 78, 221, 0.85)', 'rgba(0, 212, 255, 0.9)'],
                 borderColor: ['#4361ee', '#9d4edd', '#00d4ff'],
                 borderWidth: 1.5,
                 borderRadius: 6
@@ -842,8 +851,7 @@
             ]
           },
           options: {
-            responsive: true,
-            maintainAspectRatio: false,
+            ...commonPrintOptions,
             scales: {
               y: {
                 beginAtZero: true,
@@ -851,13 +859,13 @@
               }
             }
           }
-        });
+        }));
       }
 
       // Chart 2: Degradation Curves under Packet Loss in Report
       const ctx2 = document.getElementById('report-chart-loss')?.getContext('2d');
       if (ctx2) {
-        new Chart(ctx2, {
+        chartInstances.push(new Chart(ctx2, {
           type: 'line',
           data: {
             labels: ['0% Loss', '1% Loss', '2% Loss', '5% Loss'],
@@ -892,8 +900,7 @@
             ]
           },
           options: {
-            responsive: true,
-            maintainAspectRatio: false,
+            ...commonPrintOptions,
             scales: {
               y: {
                 beginAtZero: true,
@@ -904,13 +911,13 @@
               }
             }
           }
-        });
+        }));
       }
 
       // Chart 3: Connection Setup Latency (Horizontal Bar) in Report
       const ctx3 = document.getElementById('report-chart-setup')?.getContext('2d');
       if (ctx3) {
-        new Chart(ctx3, {
+        chartInstances.push(new Chart(ctx3, {
           type: 'bar',
           data: {
             labels: ['HTTP/1.1 (TCP+TLS 1.2)', 'HTTP/2 (TCP+TLS 1.3)', 'HTTP/3 (QUIC 1-RTT)'],
@@ -924,9 +931,8 @@
             }]
           },
           options: {
+            ...commonPrintOptions,
             indexAxis: 'y',
-            responsive: true,
-            maintainAspectRatio: false,
             plugins: { legend: { display: false } },
             scales: {
               x: {
@@ -935,13 +941,13 @@
               }
             }
           }
-        });
+        }));
       }
 
       // Chart 4: Multi-Attribute Radar Comparison in Report
       const ctx4 = document.getElementById('report-chart-radar')?.getContext('2d');
       if (ctx4) {
-        new Chart(ctx4, {
+        chartInstances.push(new Chart(ctx4, {
           type: 'radar',
           data: {
             labels: ['Speed', 'Loss Resilience', 'Low Latency', 'Multiplexing', 'Security'],
@@ -970,8 +976,7 @@
             ]
           },
           options: {
-            responsive: true,
-            maintainAspectRatio: false,
+            ...commonPrintOptions,
             scales: {
               r: {
                 suggestedMin: 0,
@@ -986,15 +991,43 @@
               legend: { position: 'bottom' }
             }
           }
-        });
+        }));
       }
     }
 
-    // Auto-initialize charts on print event so the printed document always has rendered charts
+    // Export PDF handler: forces report visibility, renders charts, and triggers print preview
+    function exportReportToPDF() {
+      const reportEl = document.getElementById('full-academic-report');
+      if (reportEl) {
+        reportEl.style.display = 'block';
+      }
+      initReportCharts();
+      // Ensure charts have completed canvas drawing before browser print dialog captures the layout
+      setTimeout(() => {
+        chartInstances.forEach(c => c.resize());
+        window.print();
+      }, 250);
+    }
+
+    // Auto-prepare charts on page load & beforeprint
+    document.addEventListener('DOMContentLoaded', () => {
+      // Warm up charts in background
+      const reportEl = document.getElementById('full-academic-report');
+      const wasHidden = reportEl && (reportEl.style.display === 'none' || reportEl.style.display === '');
+      if (wasHidden) {
+        reportEl.style.display = 'block';
+        initReportCharts();
+        reportEl.style.display = 'none';
+      } else {
+        initReportCharts();
+      }
+    });
+
     window.addEventListener('beforeprint', () => {
       const reportEl = document.getElementById('full-academic-report');
       if (reportEl) reportEl.style.display = 'block';
       initReportCharts();
+      chartInstances.forEach(c => c.resize());
     });
   </script>
 </body>
