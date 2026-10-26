@@ -58,35 +58,35 @@
     </div>
 
     <!-- Quick Executive Summary Dashboard (Screen Only - No Long Scrolling Needed) -->
-    <div class="glass-card no-print" style="margin-bottom: 2.5rem; background: #ffffff; border: 1.5px solid #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
-      <div style="border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem; margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+    <div class="glass-card no-print" style="margin-bottom: 2.5rem; border: 1px solid var(--border-glass);">
+      <div style="border-bottom: 1px solid var(--border-glass); padding-bottom: 1rem; margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
         <div>
-          <span class="badge" style="background: rgba(2, 132, 199, 0.08); border-color: rgba(2, 132, 199, 0.25); color: #0284c7; margin-bottom: 0.4rem;">High-Level Project Digest</span>
-          <h2 style="margin: 0; font-size: 1.45rem; color: #0f172a;">Executive Project Summary & Core Findings</h2>
+          <span class="badge" style="background: rgba(0, 242, 254, 0.1); border-color: rgba(0, 242, 254, 0.3); color: var(--accent-cyan); margin-bottom: 0.4rem;">High-Level Project Digest</span>
+          <h2 style="margin: 0; font-size: 1.45rem; color: var(--text-heading);">Executive Project Summary &amp; Core Findings</h2>
         </div>
-        <div style="font-size: 0.85rem; color: #64748b; font-family: var(--font-mono);">
+        <div style="font-size: 0.85rem; color: var(--text-dim); font-family: var(--font-mono);">
           TE-A TE-Computer | FR. CRCE
         </div>
       </div>
 
       <!-- Quick 3 Stat Cards -->
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem;">
-        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-sm); padding: 1.25rem; border-top: 3px solid #0284c7;">
-          <div style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: #64748b; margin-bottom: 0.35rem;">Handshake Reduction</div>
-          <div style="font-size: 2rem; font-weight: 800; font-family: var(--font-mono); color: #0284c7;">-85.9%</div>
-          <div style="font-size: 0.86rem; color: #475569; margin-top: 0.25rem;">QUIC combines transport & TLS 1.3 into <strong>1-RTT (45ms)</strong> vs TCP+TLS (320ms).</div>
+        <div class="stat-card" style="border-top: 3px solid var(--accent-cyan); text-align: left; padding: 1.25rem;">
+          <div style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.35rem;">Handshake Reduction</div>
+          <div style="font-size: 2rem; font-weight: 800; font-family: var(--font-mono); color: var(--accent-cyan);">-85.9%</div>
+          <div style="font-size: 0.86rem; color: var(--text-muted); margin-top: 0.25rem;">QUIC combines transport &amp; TLS 1.3 into <strong>1-RTT (45ms)</strong> vs TCP+TLS (320ms).</div>
         </div>
 
-        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-sm); padding: 1.25rem; border-top: 3px solid #059669;">
-          <div style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: #64748b; margin-bottom: 0.35rem;">Speedup Under 5% Loss</div>
-          <div style="font-size: 2rem; font-weight: 800; font-family: var(--font-mono); color: #059669;">4.69x Faster</div>
-          <div style="font-size: 0.86rem; color: #475569; margin-top: 0.25rem;">HTTP/3 loads in <strong>810ms</strong> vs HTTP/2's <strong>3,800ms</strong> (+313% HoL penalty).</div>
+        <div class="stat-card" style="border-top: 3px solid var(--accent-emerald); text-align: left; padding: 1.25rem;">
+          <div style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.35rem;">Speedup Under 5% Loss</div>
+          <div style="font-size: 2rem; font-weight: 800; font-family: var(--font-mono); color: var(--accent-emerald);">4.69x Faster</div>
+          <div style="font-size: 0.86rem; color: var(--text-muted); margin-top: 0.25rem;">HTTP/3 loads in <strong>810ms</strong> vs HTTP/2's <strong>3,800ms</strong> (+313% HoL penalty).</div>
         </div>
 
-        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-sm); padding: 1.25rem; border-top: 3px solid #7c3aed;">
-          <div style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: #64748b; margin-bottom: 0.35rem;">Reference Standard</div>
-          <div style="font-size: 1.25rem; font-weight: 800; color: #7c3aed; margin-top: 0.4rem; line-height: 1.3;">ACM CoNEXT 2025</div>
-          <div style="font-size: 0.86rem; color: #475569; margin-top: 0.35rem;">Grounded in <strong>Mücke et al.</strong> (DOI: 10.1145/3768988) and RFC 9000/9114.</div>
+        <div class="stat-card" style="border-top: 3px solid var(--accent-violet); text-align: left; padding: 1.25rem;">
+          <div style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.35rem;">Reference Standard</div>
+          <div style="font-size: 1.25rem; font-weight: 800; color: var(--accent-violet); margin-top: 0.4rem; line-height: 1.3;">ACM CoNEXT 2025</div>
+          <div style="font-size: 0.86rem; color: var(--text-muted); margin-top: 0.35rem;">Grounded in <strong>Mücke et al.</strong> (DOI: 10.1145/3768988) and RFC 9000/9114.</div>
         </div>
       </div>
 
@@ -108,37 +108,37 @@
               <td>3 RTTs (320 ms)</td>
               <td>2 RTTs (180 ms)</td>
               <td><strong>1 RTT (45 ms) / 0-RTT</strong></td>
-              <td><span style="color:#059669; font-weight:700;">QUIC is 86% faster</span></td>
+              <td><span style="color: var(--accent-emerald); font-weight: 700;">QUIC is 86% faster</span></td>
             </tr>
             <tr>
               <td><strong>Head-of-Line Blocking</strong></td>
-              <td>App & Transport HoL</td>
+              <td>App &amp; Transport HoL</td>
               <td>Transport HoL (TCP stalls)</td>
               <td><strong>Zero Transport HoL</strong></td>
-              <td><span style="color:#059669; font-weight:700;">Eliminated over UDP</span></td>
+              <td><span style="color: var(--accent-emerald); font-weight: 700;">Eliminated over UDP</span></td>
             </tr>
             <tr>
               <td><strong>5% Loss Page Load</strong></td>
               <td>7,200 ms</td>
               <td>3,800 ms</td>
               <td><strong>810 ms</strong></td>
-              <td><span style="color:#059669; font-weight:700;">H3 is 4.7x faster</span></td>
+              <td><span style="color: var(--accent-emerald); font-weight: 700;">H3 is 4.7x faster</span></td>
             </tr>
             <tr>
               <td><strong>Cryptographic Security</strong></td>
               <td>Optional TLS (Layered)</td>
               <td>TLS 1.2 / 1.3 Layered</td>
               <td><strong>Built-in TLS 1.3 (Integrated)</strong></td>
-              <td><span style="color:#059669; font-weight:700;">Mandatory Encryption</span></td>
+              <td><span style="color: var(--accent-emerald); font-weight: 700;">Mandatory Encryption</span></td>
             </tr>
           </tbody>
         </table>
       </div>
 
       <!-- Fast Actions inside Summary Box -->
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; background: #f8fafc; padding: 1rem; border-radius: var(--radius-sm); border: 1px solid #e2e8f0;">
-        <div style="font-size: 0.88rem; color: #475569;">
-          Authors: <strong>Jeet Chavan (10584)</strong>, <strong>Ritu Ahirwar (10578)</strong>, <strong>Jeshrun Dehte (10593)</strong> — Class: TE-A
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; background: var(--bg-card); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-glass);">
+        <div style="font-size: 0.88rem; color: var(--text-muted);">
+          Authors: <strong style="color: var(--text-main);">Jeet Chavan (10584)</strong>, <strong style="color: var(--text-main);">Ritu Ahirwar (10578)</strong>, <strong style="color: var(--text-main);">Jeshrun Dehte (10593)</strong> — Class: TE-A
         </div>
         <div style="display: flex; gap: 0.6rem;">
           <button onclick="toggleFullReport()" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
