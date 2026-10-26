@@ -35,20 +35,124 @@
 
   <main class="container section">
 
-    <!-- Action Bar for Report Printing (Screen Only) -->
-    <div class="glass-card no-print" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+    <!-- Action Bar & Report Download Header (Screen Only) -->
+    <div class="glass-card no-print" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; border-left: 4px solid var(--accent-cyan);">
       <div>
-        <h3 style="margin: 0; color: var(--text-heading);">Departmental Evaluation Report</h3>
-        <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted);">
-          Complete project documentation ready for departmental review, grading, and PDF export.
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+          <span class="badge" style="font-size: 0.72rem; padding: 0.15rem 0.55rem;">Academic Report</span>
+          <span style="font-size: 0.85rem; color: var(--text-dim);">Department of Computer Engineering | FR. CRCE</span>
+        </div>
+        <h3 style="margin: 0; color: var(--text-heading);">Executive Summary & Full Report</h3>
+        <p style="margin: 0.25rem 0 0; font-size: 0.9rem; color: var(--text-muted);">
+          A concise executive summary is provided below. You can also view or download the complete 8-section departmental evaluation report.
         </p>
       </div>
-      <div style="display: flex; gap: 0.75rem;">
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <button onclick="toggleFullReport()" class="btn btn-secondary" id="btn-toggle-report" style="padding: 0.75rem 1.25rem; font-size: 0.92rem;">
+          <svg class="ui-icon ui-icon-stroke" viewBox="0 0 24 24" style="margin-right:0.4rem;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg><span id="toggle-report-text">View Full 8-Section Report</span>
+        </button>
         <button onclick="window.print()" class="btn btn-primary" id="btn-print-report" style="padding: 0.75rem 1.5rem; font-size: 0.95rem;">
-          <svg class="ui-icon ui-icon-stroke" viewBox="0 0 24 24" style="margin-right:0.4rem;"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>Print / Save as PDF
+          <svg class="ui-icon ui-icon-stroke" viewBox="0 0 24 24" style="margin-right:0.4rem;"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>Download Report (PDF)
         </button>
       </div>
     </div>
+
+    <!-- Quick Executive Summary Dashboard (Screen Only - No Long Scrolling Needed) -->
+    <div class="glass-card no-print" style="margin-bottom: 2.5rem; background: #ffffff; border: 1.5px solid #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
+      <div style="border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem; margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+        <div>
+          <span class="badge" style="background: rgba(2, 132, 199, 0.08); border-color: rgba(2, 132, 199, 0.25); color: #0284c7; margin-bottom: 0.4rem;">High-Level Project Digest</span>
+          <h2 style="margin: 0; font-size: 1.45rem; color: #0f172a;">Executive Project Summary & Core Findings</h2>
+        </div>
+        <div style="font-size: 0.85rem; color: #64748b; font-family: var(--font-mono);">
+          TE-A TE-Computer | FR. CRCE
+        </div>
+      </div>
+
+      <!-- Quick 3 Stat Cards -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem;">
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-sm); padding: 1.25rem; border-top: 3px solid #0284c7;">
+          <div style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: #64748b; margin-bottom: 0.35rem;">Handshake Reduction</div>
+          <div style="font-size: 2rem; font-weight: 800; font-family: var(--font-mono); color: #0284c7;">-85.9%</div>
+          <div style="font-size: 0.86rem; color: #475569; margin-top: 0.25rem;">QUIC combines transport & TLS 1.3 into <strong>1-RTT (45ms)</strong> vs TCP+TLS (320ms).</div>
+        </div>
+
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-sm); padding: 1.25rem; border-top: 3px solid #059669;">
+          <div style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: #64748b; margin-bottom: 0.35rem;">Speedup Under 5% Loss</div>
+          <div style="font-size: 2rem; font-weight: 800; font-family: var(--font-mono); color: #059669;">4.69x Faster</div>
+          <div style="font-size: 0.86rem; color: #475569; margin-top: 0.25rem;">HTTP/3 loads in <strong>810ms</strong> vs HTTP/2's <strong>3,800ms</strong> (+313% HoL penalty).</div>
+        </div>
+
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--radius-sm); padding: 1.25rem; border-top: 3px solid #7c3aed;">
+          <div style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: #64748b; margin-bottom: 0.35rem;">Reference Standard</div>
+          <div style="font-size: 1.25rem; font-weight: 800; color: #7c3aed; margin-top: 0.4rem; line-height: 1.3;">ACM CoNEXT 2025</div>
+          <div style="font-size: 0.86rem; color: #475569; margin-top: 0.35rem;">Grounded in <strong>Mücke et al.</strong> (DOI: 10.1145/3768988) and RFC 9000/9114.</div>
+        </div>
+      </div>
+
+      <!-- Quick Summary Matrix -->
+      <div class="table-responsive" style="margin-bottom: 1.25rem;">
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Evaluation Parameter</th>
+              <th>HTTP/1.1 (RFC 2616)</th>
+              <th>HTTP/2 (RFC 7540)</th>
+              <th>HTTP/3 (RFC 9000/9114)</th>
+              <th>Verdict</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Handshake Delay</strong></td>
+              <td>3 RTTs (320 ms)</td>
+              <td>2 RTTs (180 ms)</td>
+              <td><strong>1 RTT (45 ms) / 0-RTT</strong></td>
+              <td><span style="color:#059669; font-weight:700;">QUIC is 86% faster</span></td>
+            </tr>
+            <tr>
+              <td><strong>Head-of-Line Blocking</strong></td>
+              <td>App & Transport HoL</td>
+              <td>Transport HoL (TCP stalls)</td>
+              <td><strong>Zero Transport HoL</strong></td>
+              <td><span style="color:#059669; font-weight:700;">Eliminated over UDP</span></td>
+            </tr>
+            <tr>
+              <td><strong>5% Loss Page Load</strong></td>
+              <td>7,200 ms</td>
+              <td>3,800 ms</td>
+              <td><strong>810 ms</strong></td>
+              <td><span style="color:#059669; font-weight:700;">H3 is 4.7x faster</span></td>
+            </tr>
+            <tr>
+              <td><strong>Cryptographic Security</strong></td>
+              <td>Optional TLS (Layered)</td>
+              <td>TLS 1.2 / 1.3 Layered</td>
+              <td><strong>Built-in TLS 1.3 (Integrated)</strong></td>
+              <td><span style="color:#059669; font-weight:700;">Mandatory Encryption</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Fast Actions inside Summary Box -->
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; background: #f8fafc; padding: 1rem; border-radius: var(--radius-sm); border: 1px solid #e2e8f0;">
+        <div style="font-size: 0.88rem; color: #475569;">
+          Authors: <strong>Jeet Chavan (10584)</strong>, <strong>Ritu Ahirwar (10578)</strong>, <strong>Jeshrun Dehte (10593)</strong> — Class: TE-A
+        </div>
+        <div style="display: flex; gap: 0.6rem;">
+          <button onclick="toggleFullReport()" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+            Read Full Documentation ↓
+          </button>
+          <button onclick="window.print()" class="btn btn-primary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+            Export Official PDF ↗
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detailed 8-Section Academic Report Container (Toggleable on Screen, Always Visible on Print) -->
+    <div id="full-academic-report" class="full-report-section" style="display: none;">
 
     <!-- Formal Academic Report Header (Visible on Screen & Print) -->
     <div class="report-header-card glass-card" style="margin-bottom: 2.5rem; border-top: 4px solid var(--accent-cyan);">
@@ -618,8 +722,7 @@
         </li>
       </ul>
     </div>
-
-
+    </div> <!-- End #full-academic-report -->
 
   </main>
 
@@ -664,5 +767,131 @@
   </footer>
 
   <script src="js/nav.js"></script>
+  <script>
+    // Toggle between compact executive summary and full 8-section documentation
+    function toggleFullReport() {
+      const reportEl = document.getElementById('full-academic-report');
+      const toggleText = document.getElementById('toggle-report-text');
+      if (!reportEl) return;
+
+      const isHidden = reportEl.style.display === 'none' || reportEl.style.display === '';
+      if (isHidden) {
+        reportEl.style.display = 'block';
+        if (toggleText) toggleText.textContent = 'Hide Detailed Report ↑';
+        // Initialize report charts if not yet rendered
+        initReportCharts();
+        reportEl.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        reportEl.style.display = 'none';
+        if (toggleText) toggleText.textContent = 'View Full 8-Section Report ↓';
+      }
+    }
+
+    let reportChartsInitialized = false;
+    function initReportCharts() {
+      if (reportChartsInitialized || typeof Chart === 'undefined') return;
+      reportChartsInitialized = true;
+
+      // Chart 1: Average Page Load Time in Report
+      const ctx1 = document.getElementById('report-chart-avg-load')?.getContext('2d');
+      if (ctx1) {
+        new Chart(ctx1, {
+          type: 'bar',
+          data: {
+            labels: ['HTTP/1.1 (TCP)', 'HTTP/2 (Multiplexed)', 'HTTP/3 (QUIC)'],
+            datasets: [
+              {
+                label: 'Our Lab Results (ms)',
+                data: [1850, 920, 640],
+                backgroundColor: ['rgba(67, 97, 238, 0.8)', 'rgba(157, 78, 221, 0.8)', 'rgba(0, 212, 255, 0.85)'],
+                borderColor: ['#4361ee', '#9d4edd', '#00d4ff'],
+                borderWidth: 1.5,
+                borderRadius: 6
+              },
+              {
+                label: 'Paper Baseline (ms)',
+                data: [2100, 1050, 710],
+                backgroundColor: ['rgba(67, 97, 238, 0.35)', 'rgba(157, 78, 221, 0.35)', 'rgba(0, 212, 255, 0.35)'],
+                borderColor: ['#4361ee', '#9d4edd', '#00d4ff'],
+                borderWidth: 1.5,
+                borderDash: [4, 4],
+                borderRadius: 6
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: { display: true, text: 'Latency (ms)', color: '#475569' }
+              }
+            }
+          }
+        });
+      }
+
+      // Chart 2: Degradation Curves under Packet Loss in Report
+      const ctx2 = document.getElementById('report-chart-loss')?.getContext('2d');
+      if (ctx2) {
+        new Chart(ctx2, {
+          type: 'line',
+          data: {
+            labels: ['0% Loss', '1% Loss', '2% Loss', '5% Loss'],
+            datasets: [
+              {
+                label: 'HTTP/1.1',
+                data: [1850, 2900, 4100, 7200],
+                borderColor: '#4361ee',
+                backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                tension: 0.3,
+                fill: false,
+                borderWidth: 2
+              },
+              {
+                label: 'HTTP/2 (TCP HoL Blocking)',
+                data: [920, 1400, 2100, 3800],
+                borderColor: '#9d4edd',
+                backgroundColor: 'rgba(157, 78, 221, 0.1)',
+                tension: 0.3,
+                fill: false,
+                borderWidth: 2.5
+              },
+              {
+                label: 'HTTP/3 (QUIC Immunity)',
+                data: [640, 680, 720, 810],
+                borderColor: '#00d4ff',
+                backgroundColor: 'rgba(0, 212, 255, 0.15)',
+                tension: 0.3,
+                fill: false,
+                borderWidth: 3
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: { display: true, text: 'Page Load (ms)', color: '#475569' }
+              },
+              x: {
+                title: { display: true, text: 'Packet Loss Impairment', color: '#475569' }
+              }
+            }
+          }
+        });
+      }
+    }
+
+    // Auto-initialize charts on print event so the printed document always has rendered charts
+    window.addEventListener('beforeprint', () => {
+      const reportEl = document.getElementById('full-academic-report');
+      if (reportEl) reportEl.style.display = 'block';
+      initReportCharts();
+    });
+  </script>
 </body>
 </html>

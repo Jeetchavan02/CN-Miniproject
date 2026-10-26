@@ -1763,6 +1763,12 @@ a:hover {
     margin: 0 !important;
   }
 
+  /* Ensure complete academic report displays on print even if toggled closed on screen */
+  #full-academic-report,
+  .full-report-section {
+    display: block !important;
+  }
+
   /* Hide screen-only interactive & navigational elements */
   .site-header,
   .nav-toggle,
@@ -1771,6 +1777,7 @@ a:hover {
   .btn,
   button,
   #btn-print-report,
+  #btn-toggle-report,
   .no-print,
   .particles-bg {
     display: none !important;
