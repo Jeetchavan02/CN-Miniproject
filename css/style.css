@@ -247,6 +247,19 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
 }
 
+[data-theme="light"] .btn-secondary {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+[data-theme="light"] .btn-secondary:hover {
+  background: #e2e8f0;
+  border-color: #94a3b8;
+  color: #0f172a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
 [data-theme="light"] .reference-item {
   background: #f8fafc;
   border-color: #e2e8f0;
@@ -581,7 +594,7 @@ a:hover {
 .btn-secondary:hover {
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  color: var(--text-heading);
   transform: translateY(-2px);
 }
 
